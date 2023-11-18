@@ -11,47 +11,23 @@ int main()
 	fin >> nrSeturiDeDate;
 	while (nrSeturiDeDate > 0)
 	{
-		int n, p, k, i, j;
-		int a[MAX_N], nrp[MAX_N];
+		int n, p, k, x, i, nrPPrime;
+		int pozitie[MAX_N];
 		fin >> n >> p >> k;
-		fin >> a[0];
-		// nrp[i] = numarul de numere p prime
-		// din secventa a[0], a[1], ... , a[i]
-		nrp[0] = esteNumarPPrim(a[0], p) ? 1 : 0;
-		int nrSecvente = 0;
-		int st[MAX_N], dr[MAX_N];
-		if (nrp[0] && k == 1)
+		for (nrPPrime = i = 0; i < n; i++)
 		{
-			st[nrSecvente] = dr[nrSecvente] = 1;
-			nrSecvente++;
+			fin >> x;
+			if (esteNumarPPrim(x, p))
+				pozitie[nrPPrime++] = i;
 		}
-		for (i = 1; i < n; i++)
+		if (k > nrPPrime)
+			fout << 0 << '\n';
+		else
 		{
-			fin >> a[i];
-			if (esteNumarPPrim(a[i], p))
-				nrp[i] = nrp[i-1] + 1;
-			else
-				nrp[i] = nrp[i-1];
-			if (i+1 >= k && nrp[i] >= k
-		            && nrp[i] > nrp[i-1])
-			{
-				if (nrp[0] && nrp[i] == k)
-				{
-					st[nrSecvente] = 1;
-					dr[nrSecvente++] = i+1;
-				}
-				for (j = 1; j <= i-k+1; j++)
-					if (nrp[j] > nrp[j-1]
-					    && nrp[i]-nrp[j-1] == k)
-					{
-						st[nrSecvente] = j+1;
-						dr[nrSecvente++] = i+1;
-			    		}
-			}
+			fout << nrPPrime-k+1 << '\n';
+			for (i = 0; i < nrPPrime-k+1; i++)
+				fout << pozitie[i]+1 << ' ' << pozitie[i+k-1]+1 << '\n';
 		}
-		fout << nrSecvente << '\n';
-		for (i = 0; i < nrSecvente; i++)
-			fout << st[i] << ' ' << dr[i] << '\n';
 		nrSeturiDeDate--;
 	}
 	fin.close();
