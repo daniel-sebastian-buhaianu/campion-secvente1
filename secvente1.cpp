@@ -41,9 +41,9 @@ int main()
 		}
 		for (i = 1; i <= n-k; i++)
 			for (j = i+k-1; j < n; j++)
-				if (esteNumarPPrim(a[i], p)
-				    && esteNumarPPrim(a[j], p)
-				    && nrp[j]-nrp[i-1] == k)
+				if (nrp[j]-nrp[i-1] == k
+				    && nrp[i] > nrp[i-1]
+				    && nrp[j] > nrp[j-1])
 				{
 					st[nrSecvente] = i+1;
 					dr[nrSecvente] = j+1;
