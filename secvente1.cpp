@@ -32,23 +32,23 @@ int main()
 				nrp[i] = nrp[i-1] + 1;
 			else
 				nrp[i] = nrp[i-1];
-			if (i+1 >= k
-			    && nrp[0] && nrp[i] > nrp[i-1]
-			    && nrp[i] == k)
+			if (i+1 >= k && nrp[i] >= k
+		            && nrp[i] > nrp[i-1])
 			{
-				st[nrSecvente] = 1;
-				dr[nrSecvente++] = i+1;
+				if (nrp[0] && nrp[i] == k)
+				{
+					st[nrSecvente] = 1;
+					dr[nrSecvente++] = i+1;
+				}
+				for (j = 1; j <= i-k+1; j++)
+					if (nrp[j] > nrp[j-1]
+					    && nrp[i]-nrp[j-1] == k)
+					{
+						st[nrSecvente] = j+1;
+						dr[nrSecvente++] = i+1;
+			    		}
 			}
 		}
-		for (i = 1; i <= n-k; i++)
-			for (j = i+k-1; j < n; j++)
-				if (nrp[j]-nrp[i-1] == k
-				    && nrp[i] > nrp[i-1]
-				    && nrp[j] > nrp[j-1])
-				{
-					st[nrSecvente] = i+1;
-					dr[nrSecvente++] = j+1;
-				}
 		fout << nrSecvente << '\n';
 		for (i = 0; i < nrSecvente; i++)
 			fout << st[i] << ' ' << dr[i] << '\n';
